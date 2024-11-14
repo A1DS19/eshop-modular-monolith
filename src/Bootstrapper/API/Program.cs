@@ -1,7 +1,4 @@
-using Basket;
-using Catalog;
-using Ordering;
-
+#region Add services to the container.
 var builder = WebApplication.CreateBuilder(args);
 
 builder
@@ -9,12 +6,12 @@ builder
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
-#region Add services to the container.
-
 #endregion
-var app = builder.Build();
 
 #region Configure the HTTP request pipeline.
+var app = builder.Build();
+
+app.UseCatalogModule().UseBasketModule().UseOrderingModule();
 
 #endregion
 
