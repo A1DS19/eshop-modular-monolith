@@ -1,0 +1,13 @@
+services:
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: src/Bootstrapper/API/Dockerfile
+  
+  eshopdb:
+    image: postgres
+    
+
+volumes:
+  postgres_eshopdb:
