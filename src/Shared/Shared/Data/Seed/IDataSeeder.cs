@@ -1,4 +1,4 @@
-namespace Shared.Seed;
+namespace Shared.Data.Seed;
 
 public interface IDataSeeder
 {
