@@ -26,7 +26,7 @@ public class GetProductByIdHandler(CatalogDbContext dbContext)
 
         if (product is null)
         {
-            throw new Exception($"Product with ID {query.Id} not found");
+            throw new ProductNotFoundException(query.Id);
         }
 
         return new GetProductByIdResult(product.Adapt<ProductDto>());

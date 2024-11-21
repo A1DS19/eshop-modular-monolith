@@ -29,7 +29,7 @@ public class UpdateProductCommandHandler(CatalogDbContext dbContext)
 
         if (product is null)
         {
-            throw new Exception("Product not found.");
+            throw new ProductNotFoundException(command.Product.Id);
         }
 
         UpdateProductsWithNewValues(product, command.Product);

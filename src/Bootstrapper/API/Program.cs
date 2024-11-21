@@ -1,4 +1,6 @@
 #region Add services to the container.
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 var catalogAssembly = typeof(CatalogModule).Assembly;
@@ -13,6 +15,8 @@ builder
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 #endregion
 
 #region Configure the HTTP request pipeline.
@@ -21,6 +25,8 @@ var app = builder.Build();
 app.MapCarter();
 
 app.UseCatalogModule().UseBasketModule().UseOrderingModule();
+
+app.UseExceptionHandler(opts => { });
 
 #endregion
 
