@@ -1,6 +1,6 @@
 namespace Catalog.Products.Features.UpdateProduct;
 
-public record UpdateProductRequest(ProductDto ProductDto);
+public record UpdateProductRequest(ProductDto Product);
 
 public record UpdateProductResponse(bool IsSuccess);
 
@@ -12,7 +12,7 @@ public class UpdateProductEndpoint : ICarterModule
                 "/products",
                 async (UpdateProductRequest request, ISender sender) =>
                 {
-                    var command = request.ProductDto.Adapt<UpdateProductCommand>();
+                    var command = request.Adapt<UpdateProductCommand>();
                     var result = await sender.Send(command);
                     var response = result.Adapt<UpdateProductResponse>();
 

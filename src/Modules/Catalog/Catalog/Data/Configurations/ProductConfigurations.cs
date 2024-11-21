@@ -8,7 +8,7 @@ public class ProductConfigurations : IEntityTypeConfiguration<Product>
 
         builder.Property(p => p.Name).HasMaxLength(50).IsRequired();
 
-        builder.Property(p => p.Category).IsRequired();
+        builder.Property(p => p.Categories).IsRequired();
 
         builder.Property(p => p.Description).HasMaxLength(200);
 

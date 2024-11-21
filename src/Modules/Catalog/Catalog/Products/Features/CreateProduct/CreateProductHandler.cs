@@ -9,7 +9,7 @@ public class CreateProductValidator : AbstractValidator<CreateProductCommand>
     public CreateProductValidator()
     {
         RuleFor(x => x.Product.Name).NotEmpty();
-        RuleFor(x => x.Product.Category).NotEmpty();
+        RuleFor(x => x.Product.Categories).NotEmpty();
         RuleFor(x => x.Product.Description).NotEmpty();
         RuleFor(x => x.Product.ImageFile).NotEmpty();
         RuleFor(x => x.Product.Price).GreaterThan(0);
@@ -36,7 +36,7 @@ public class CreateProductCommandHandler(CatalogDbContext dbContext)
         var product = Product.Create(
             Guid.NewGuid(),
             productDto.Name,
-            productDto.Category,
+            productDto.Categories,
             productDto.Description,
             productDto.ImageFile,
             productDto.Price

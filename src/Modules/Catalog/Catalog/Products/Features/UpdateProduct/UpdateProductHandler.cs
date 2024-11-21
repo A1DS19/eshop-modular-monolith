@@ -10,7 +10,7 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductCommand>
     {
         RuleFor(x => x.Product.Id).NotEmpty();
         RuleFor(x => x.Product.Name).NotEmpty();
-        RuleFor(x => x.Product.Category).NotEmpty();
+        RuleFor(x => x.Product.Categories).NotEmpty();
         RuleFor(x => x.Product.Description).NotEmpty();
         RuleFor(x => x.Product.ImageFile).NotEmpty();
         RuleFor(x => x.Product.Price).GreaterThan(0);
@@ -45,7 +45,7 @@ public class UpdateProductCommandHandler(CatalogDbContext dbContext)
         Product.Update(
             product,
             productDto.Name,
-            productDto.Category,
+            productDto.Categories,
             productDto.Description,
             productDto.ImageFile,
             productDto.Price

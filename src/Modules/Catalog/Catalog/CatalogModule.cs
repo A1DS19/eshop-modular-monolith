@@ -14,10 +14,6 @@ public static class CatalogModule
     )
     {
         #region Application services
-        services.AddMediatR(config =>
-        {
-            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-        });
         #endregion
 
         #region Infrastructure services

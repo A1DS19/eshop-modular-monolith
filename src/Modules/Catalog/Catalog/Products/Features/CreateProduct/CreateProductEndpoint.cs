@@ -1,6 +1,6 @@
 namespace Catalog.Products.Features.CreateProduct;
 
-public record CreateProductRequest(ProductDto ProductDto);
+public record CreateProductRequest(ProductDto Product);
 
 public record CreateProductResponse(Guid Id);
 
@@ -12,7 +12,7 @@ public class CreateProductEndpoint : ICarterModule
                 "/products",
                 async (CreateProductRequest request, ISender sender) =>
                 {
-                    var command = request.ProductDto.Adapt<CreateProductCommand>();
+                    var command = request.Adapt<CreateProductCommand>();
                     var response = await sender.Send(command);
                     var result = response.Adapt<CreateProductResponse>();
 
