@@ -5,7 +5,7 @@ namespace Shared.Behaviors;
 
 public class ValidationBehavior<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : notnull, ICommand<TResponse>
+    where TRequest : notnull, ICommonOperationRequest<TResponse>
     where TResponse : notnull
 {
     public async Task<TResponse> Handle(

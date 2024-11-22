@@ -1,6 +1,8 @@
 namespace Catalog.Products.Features.GetProducts;
 
-public record GetProductsResponse(IEnumerable<ProductDto> Products);
+// public record GetProductsRequest(PaginatedRequest PaginationRequest);
+
+public record GetProductsResponse(PaginatedResult<ProductDto> Products);
 
 public class GetProductsEndpoint : ICarterModule
 {
@@ -8,10 +10,9 @@ public class GetProductsEndpoint : ICarterModule
     {
         app.MapGet(
                 "/products",
-                async (ISender sender) =>
+                async ([AsParameters] PaginatedRequest request, ISender sender) =>
                 {
-                    var query = new GetProductsQuery();
-                    var response = await sender.Send(query);
+                    var response = await sender.Send(new GetProductsQuery(request));
                     var result = response.Adapt<GetProductsResponse>();
 
                     return Results.Ok(result);
