@@ -1,7 +1,7 @@
 #region Add services to the container.
-
-
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog((context, cfg) => cfg.ReadFrom.Configuration(context.Configuration));
 
 var catalogAssembly = typeof(CatalogModule).Assembly;
 var basketAssembly = typeof(BasketModule).Assembly;
@@ -23,10 +23,10 @@ builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 var app = builder.Build();
 
 app.MapCarter();
+app.UseSerilogRequestLogging();
+app.UseExceptionHandler(opts => { });
 
 app.UseCatalogModule().UseBasketModule().UseOrderingModule();
-
-app.UseExceptionHandler(opts => { });
 
 #endregion
 
