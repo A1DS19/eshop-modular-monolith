@@ -13,15 +13,15 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Catalog.Data.Migrations
 {
     [DbContext(typeof(CatalogDbContext))]
-    [Migration("20241121162125_CategoryToCategories")]
-    partial class CategoryToCategories
+    [Migration("20241125154633_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasDefaultSchema("Catalog")
+                .HasDefaultSchema("catalog")
                 .HasAnnotation("ProductVersion", "9.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
@@ -69,7 +69,7 @@ namespace Catalog.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Products", "Catalog");
+                    b.ToTable("Products", "catalog");
                 });
 #pragma warning restore 612, 618
         }
