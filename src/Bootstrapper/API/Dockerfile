@@ -9,10 +9,10 @@ ARG configuration=Release
 WORKDIR /src
 
 COPY ["src/Bootstrapper/API/API.csproj", "src/Bootstrapper/API/"]
-COPY ["src/Modules/Basket/Basket/Basket.csproj", "Modules/Basket/Basket/"]
-COPY ["src/Shared/Shared/Shared.csproj", "Shared/Shared/"]
-COPY ["src/Modules/Catalog/Catalog/Catalog.csproj", "Modules/Catalog/Catalog/"]
-COPY ["src/Modules/Ordering/Ordering/Ordering.csproj", "Modules/Ordering/Ordering/"]
+COPY ["src/Modules/Basket/Basket/Basket.csproj", "src/Modules/Basket/Basket/"]
+COPY ["src/Shared/Shared/Shared.csproj", "src/Shared/Shared/"]
+COPY ["src/Modules/Catalog/Catalog/Catalog.csproj", "src/Modules/Catalog/Catalog/"]
+COPY ["src/Modules/Ordering/Ordering/Ordering.csproj", "src/Modules/Ordering/Ordering/"]
 
 RUN dotnet restore "src/Bootstrapper/API/API.csproj"
 COPY . .
