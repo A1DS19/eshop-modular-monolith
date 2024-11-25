@@ -11,6 +11,5 @@ services:
   seq:
     image: datalust/seq:2024.3
     
-
 volumes:
   postgres_eshopdb:
