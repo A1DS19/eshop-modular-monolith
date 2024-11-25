@@ -38,6 +38,11 @@ public class CustomExceptionHandler(ILogger<CustomExceptionHandler> logger) : IE
                 exception.GetType().Name,
                 context.Response.StatusCode = StatusCodes.Status400BadRequest
             ),
+            AlreadyExistsException => (
+                exception.Message,
+                exception.GetType().Name,
+                context.Response.StatusCode = StatusCodes.Status409Conflict
+            ),
             _ => (
                 "An error occurred while processing your request.",
                 "Error",

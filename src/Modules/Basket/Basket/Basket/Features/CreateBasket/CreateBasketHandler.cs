@@ -20,12 +20,24 @@ public class CreateBasketHandler(BasketDbContext dbContext)
         CancellationToken cancellationToken
     )
     {
-        var basket = CreateNewBasket(command.ShoppingCart);
+        var basket = await dbContext
+            .ShoppingCarts.AsNoTracking()
+            .SingleOrDefaultAsync(
+                x => x.UserName == command.ShoppingCart.UserName,
+                cancellationToken
+            );
 
-        dbContext.ShoppingCarts.Add(basket);
+        if (basket is not null)
+        {
+            throw new BasketAlreadyExists("ShoppingCart", command.ShoppingCart.UserName);
+        }
+
+        var newBasket = CreateNewBasket(command.ShoppingCart);
+
+        dbContext.ShoppingCarts.Add(newBasket);
         await dbContext.SaveChangesAsync(cancellationToken);
 
-        return new CreateBasketResult(basket.Id);
+        return new CreateBasketResult(newBasket.Id);
     }
 
     private ShoppingCart CreateNewBasket(ShoppingCartDto shoppingCart)
