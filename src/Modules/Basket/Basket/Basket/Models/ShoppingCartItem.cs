@@ -9,7 +9,7 @@ public class ShoppingCartItem : Entity<Guid>
     public int Quantity { get; internal set; } = default!;
     public string Color { get; private set; } = default!;
 
-    // will comes from Catalog module
+    // will comes from Catalog module via domain event
     public decimal Price { get; private set; } = default!;
     public string ProductName { get; private set; } = default!;
 
