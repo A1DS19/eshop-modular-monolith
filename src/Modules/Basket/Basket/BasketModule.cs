@@ -31,7 +31,9 @@ public static class BasketModule
 
     public static IApplicationBuilder UseBasketModule(this IApplicationBuilder app)
     {
+        #region Infrastructure application services
         app.UseMigrations<BasketDbContext>();
+        #endregion
 
         return app;
     }

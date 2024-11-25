@@ -36,7 +36,7 @@ public static class CatalogModule
 
     public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder app)
     {
-        #region Infrastructure services
+        #region Infrastructure application services
         app.UseMigrations<CatalogDbContext>();
         #endregion
 
