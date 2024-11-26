@@ -11,7 +11,9 @@ WORKDIR /src
 COPY ["src/Bootstrapper/API/API.csproj", "src/Bootstrapper/API/"]
 COPY ["src/Modules/Basket/Basket/Basket.csproj", "src/Modules/Basket/Basket/"]
 COPY ["src/Shared/Shared/Shared.csproj", "src/Shared/Shared/"]
+COPY ["src/Shared/Shared.Contracts/Shared.Contracts.csproj", "src/Shared/Shared.Contracts/"]
 COPY ["src/Modules/Catalog/Catalog/Catalog.csproj", "src/Modules/Catalog/Catalog/"]
+COPY ["src/Modules/Catalog/Catalog.Contracts/Catalog.Contracts.csproj", "src/Modules/Catalog/Catalog.Contracts/"]
 COPY ["src/Modules/Ordering/Ordering/Ordering.csproj", "src/Modules/Ordering/Ordering/"]
 
 RUN dotnet restore "src/Bootstrapper/API/API.csproj"
