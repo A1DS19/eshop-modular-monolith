@@ -1,9 +1,11 @@
+using Catalog.Contracts.Products.Features.GetProductById;
+
 namespace Basket.Basket.Features.AddItemIntoBasket;
 
 public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem)
     : ICommand<AddItemIntoBasketResult>;
 
-public record AddItemIntoBasketResult(Guid id);
+public record AddItemIntoBasketResult(Guid Id);
 
 public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBasketCommand>
 {
@@ -15,7 +17,7 @@ public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBa
     }
 }
 
-public class AddItemIntoBasketHandler(IBasketRepository repository)
+public class AddItemIntoBasketHandler(IBasketRepository repository, ISender sender)
     : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
     public async Task<AddItemIntoBasketResult> Handle(
@@ -25,15 +27,24 @@ public class AddItemIntoBasketHandler(IBasketRepository repository)
     {
         var basket = await repository.GetBasket(command.UserName, true, true, cancellationToken);
 
-        AddItemsIntoBasket(basket, command.ShoppingCartItem);
+        // sync call to catalog module to fetch product details
+        var product = await sender.Send(
+            new GetProductByIdQuery(command.ShoppingCartItem.ProductId),
+            cancellationToken
+        );
+
+        basket.AddItem(
+            command.ShoppingCartItem.ProductId,
+            command.ShoppingCartItem.Quantity,
+            command.ShoppingCartItem.Color,
+            product.Product.Price,
+            product.Product.Name
+        // command.ShoppingCartItem.Price,
+        // command.ShoppingCartItem.ProductName
+        );
 
         await repository.SaveChangesAsync(command.UserName, cancellationToken: cancellationToken);
 
         return new AddItemIntoBasketResult(basket.Id);
-    }
-
-    private void AddItemsIntoBasket(ShoppingCart basket, ShoppingCartItemDto item)
-    {
-        basket.AddItem(item.ProductId, item.Quantity, item.Color, item.Price, item.ProductName);
     }
 }
