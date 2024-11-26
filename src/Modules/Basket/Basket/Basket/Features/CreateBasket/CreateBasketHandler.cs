@@ -12,7 +12,7 @@ public class CreateBasketCommandValidator : AbstractValidator<CreateBasketComman
     }
 }
 
-public class CreateBasketHandler(BasketDbContext dbContext)
+public class CreateBasketHandler(IBasketRepository repository)
     : ICommandHandler<CreateBasketCommand, CreateBasketResult>
 {
     public async Task<CreateBasketResult> Handle(
@@ -20,22 +20,16 @@ public class CreateBasketHandler(BasketDbContext dbContext)
         CancellationToken cancellationToken
     )
     {
-        var basket = await dbContext
-            .ShoppingCarts.AsNoTracking()
-            .SingleOrDefaultAsync(
-                x => x.UserName == command.ShoppingCart.UserName,
-                cancellationToken
-            );
-
-        if (basket is not null)
-        {
-            throw new BasketAlreadyExists("ShoppingCart", command.ShoppingCart.UserName);
-        }
+        await repository.GetBasket(
+            userName: command.ShoppingCart.UserName,
+            asNoTracking: false,
+            throwIfNotFound: false,
+            cancellationToken: cancellationToken
+        );
 
         var newBasket = CreateNewBasket(command.ShoppingCart);
 
-        dbContext.ShoppingCarts.Add(newBasket);
-        await dbContext.SaveChangesAsync(cancellationToken);
+        await repository.CreateBasket(newBasket, cancellationToken);
 
         return new CreateBasketResult(newBasket.Id);
     }
