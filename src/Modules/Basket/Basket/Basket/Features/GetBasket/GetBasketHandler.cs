@@ -12,7 +12,7 @@ public class GetBasketHandler(IBasketRepository repository)
         CancellationToken cancellationToken
     )
     {
-        var basket = await repository.GetBasket(query.UserName, false, true, cancellationToken);
+        var basket = await repository.GetBasket(query.UserName, true, true, cancellationToken);
         return new GetBasketResult(basket.Adapt<ShoppingCartDto>());
     }
 }

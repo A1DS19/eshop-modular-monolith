@@ -17,6 +17,11 @@ builder
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
 #endregion
 
 #region Configure the HTTP request pipeline.
