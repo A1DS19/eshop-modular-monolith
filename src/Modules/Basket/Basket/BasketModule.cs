@@ -15,6 +15,8 @@ public static class BasketModule
     {
         #region Infrastructure services
         services.AddScoped<IBasketRepository, BasketRepository>();
+        services.Decorate<IBasketRepository, CachedBasketRepository>();
+
         services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
         services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
 
