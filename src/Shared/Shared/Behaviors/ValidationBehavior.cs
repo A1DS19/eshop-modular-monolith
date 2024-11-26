@@ -1,5 +1,5 @@
 using FluentValidation;
-using Shared.CQRS;
+using Shared.Contracts.CQRS;
 
 namespace Shared.Behaviors;
 

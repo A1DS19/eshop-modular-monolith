@@ -1,3 +1,3 @@
-namespace Shared.CQRS;
+namespace Shared.Contracts.CQRS;
 
 public interface ICommonOperationRequest<out TResponse> { }
