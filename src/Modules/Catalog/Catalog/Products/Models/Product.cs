@@ -35,27 +35,27 @@ public class Product : Aggregate<Guid>
         return product;
     }
 
-    public static void Update(
-        Product product,
+    public void Update(
         string name,
-        List<string> categories,
+        List<string> category,
         string description,
         string imageFile,
         decimal price
     )
     {
-        ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
-        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price, nameof(price));
+        ArgumentException.ThrowIfNullOrEmpty(name);
+        ArgumentOutOfRangeException.ThrowIfNegativeOrZero(price);
 
-        product.Name = name;
-        product.Categories = categories;
-        product.Description = description;
-        product.ImageFile = imageFile;
-        product.Price = price;
+        Name = name;
+        Categories = category;
+        Description = description;
+        ImageFile = imageFile;
 
-        if (product.Price != price)
+        // if price has changed, raise ProductPriceChanged domain event
+        if (Price != price)
         {
-            product.AddDomainEvent(new ProductPriceChangedEvent(product));
+            Price = price;
+            AddDomainEvent(new ProductPriceChangedEvent(this));
         }
     }
 }

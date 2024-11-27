@@ -32,23 +32,17 @@ public class UpdateProductCommandHandler(CatalogDbContext dbContext)
             throw new ProductNotFoundException(command.Product.Id);
         }
 
-        UpdateProductsWithNewValues(product, command.Product);
+        product.Update(
+            command.Product.Name,
+            command.Product.Categories,
+            command.Product.Description,
+            command.Product.ImageFile,
+            command.Product.Price
+        );
 
         dbContext.Products.Update(product);
         await dbContext.SaveChangesAsync(cancellationToken);
 
         return new UpdateProductResult(true);
-    }
-
-    private void UpdateProductsWithNewValues(Product product, ProductDto productDto)
-    {
-        Product.Update(
-            product,
-            productDto.Name,
-            productDto.Categories,
-            productDto.Description,
-            productDto.ImageFile,
-            productDto.Price
-        );
     }
 }
