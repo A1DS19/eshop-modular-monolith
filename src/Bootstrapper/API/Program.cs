@@ -10,17 +10,19 @@ var orderingAssembly = typeof(OrderingModule).Assembly;
 builder.Services.AddCarterWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 builder.Services.AddMediatRWithAssemblies(catalogAssembly, basketAssembly, orderingAssembly);
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});
+
+builder.Services.AddMassTransitAssemblies(catalogAssembly, basketAssembly);
+
 builder
     .Services.AddCatalogModule(builder.Configuration)
     .AddBasketModule(builder.Configuration)
     .AddOrderingModule(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
-
-builder.Services.AddStackExchangeRedisCache(options =>
-{
-    options.Configuration = builder.Configuration.GetConnectionString("Redis");
-});
 
 #endregion
 
@@ -33,6 +35,6 @@ app.UseExceptionHandler(opts => { });
 
 app.UseCatalogModule().UseBasketModule().UseOrderingModule();
 
-#endregion
-
 app.Run();
+
+#endregion

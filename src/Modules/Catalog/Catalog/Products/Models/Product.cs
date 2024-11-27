@@ -55,7 +55,7 @@ public class Product : Aggregate<Guid>
 
         if (product.Price != price)
         {
-            product.AddDomainEvent(new ProductPriceChangeEvent(product));
+            product.AddDomainEvent(new ProductPriceChangedEvent(product));
         }
     }
 }
