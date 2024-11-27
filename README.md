@@ -10,3 +10,5 @@
 
 ### Add package
 - `dotnet add 'project-path' package 'package-name' --version 'version'`
+
+### In order for Keycloak to work, you need to create a schema in your local Postgres instance called `identity`
