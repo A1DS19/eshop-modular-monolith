@@ -8,6 +8,9 @@ services:
   eshopdb:
     image: postgres
   
+  messagebus:
+    image: rabbitmq:4.0.4-management
+
   seq:
     image: datalust/seq:2024.3
   
