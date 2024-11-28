@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Diagnostics;
+﻿using Basket.Data.Processors;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Data;
@@ -27,6 +28,8 @@ public static class BasketModule
                 options.UseNpgsql(configuration.GetConnectionString("Database"));
             }
         );
+
+        services.AddHostedService<OutboxProcessor>();
         #endregion
 
         return services;
